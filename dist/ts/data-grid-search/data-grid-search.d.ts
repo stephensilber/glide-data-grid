@@ -12,4 +12,3 @@ export interface DataGridSearchProps extends Subtract<ScrollingDataGridProps, Ha
 }
 declare const DataGridSearch: React.FunctionComponent<DataGridSearchProps>;
 export default DataGridSearch;
-//# sourceMappingURL=data-grid-search.d.ts.map

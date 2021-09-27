@@ -17,4 +17,3 @@ export interface DataGridDndProps extends Subtract<DataGridProps, Handled> {
 }
 declare const DataGridDnd: React.FunctionComponent<DataGridDndProps>;
 export default DataGridDnd;
-//# sourceMappingURL=data-grid-dnd.d.ts.map

@@ -127,4 +127,3 @@ interface UriCell extends BaseGridCell {
     readonly data: string;
 }
 export {};
-//# sourceMappingURL=data-grid-types.d.ts.map

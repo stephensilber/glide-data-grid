@@ -29,11 +29,13 @@ var _styledComponents = require("styled-components");
 
 var _styles = require("../common/styles");
 
+var _excluded = ["cellXOffset", "cellYOffset", "columns", "rows", "getCellContent", "onCellClicked", "onCellEdited", "onRowAppended", "onColumnMoved", "onDeleteRows", "onDragStart", "onHeaderMenuClick", "onItemHovered", "onVisibleRegionChanged", "selectedColumns", "onSelectedColumnsChange", "selectedRows", "onRowSelected", "onRowDeselected", "onSelectedRowsChange", "gridSelection", "onGridSelectionChange"];
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
@@ -41,7 +43,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
@@ -51,7 +53,7 @@ function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableTo
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 
@@ -67,7 +69,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
@@ -127,6 +129,7 @@ var DataEditor = function DataEditor(p) {
       onDeleteRows = p.onDeleteRows,
       onDragStart = p.onDragStart,
       onHeaderMenuClick = p.onHeaderMenuClick,
+      onItemHovered = p.onItemHovered,
       onVisibleRegionChanged = p.onVisibleRegionChanged,
       selectedColumnsOuter = p.selectedColumns,
       setSelectedColumnsOuter = p.onSelectedColumnsChange,
@@ -136,7 +139,7 @@ var DataEditor = function DataEditor(p) {
       setSelectedRowsOuter = p.onSelectedRowsChange,
       gridSelectionOuter = p.gridSelection,
       onGridSelectionChange = p.onGridSelectionChange,
-      rest = _objectWithoutProperties(p, ["cellXOffset", "cellYOffset", "columns", "rows", "getCellContent", "onCellClicked", "onCellEdited", "onRowAppended", "onColumnMoved", "onDeleteRows", "onDragStart", "onHeaderMenuClick", "onVisibleRegionChanged", "selectedColumns", "onSelectedColumnsChange", "selectedRows", "onRowSelected", "onRowDeselected", "onSelectedRowsChange", "gridSelection", "onGridSelectionChange"]);
+      rest = _objectWithoutProperties(p, _excluded);
 
   var gridSelection = gridSelectionOuter !== null && gridSelectionOuter !== void 0 ? gridSelectionOuter : gridSelectionInner;
   var setGridSelection = onGridSelectionChange !== null && onGridSelectionChange !== void 0 ? onGridSelectionChange : setGridSelectionInner;
@@ -179,7 +182,10 @@ var DataEditor = function DataEditor(p) {
         col = _ref2[0],
         row = _ref2[1];
 
-    if (col === 0 && rowMarkers) {
+    var isTrailing = showTrailingBlankRow && row === mangledRows - 1;
+    var isRowMarkerCol = col === 0 && rowMarkers;
+
+    if (isRowMarkerCol) {
       return {
         kind: _dataGridTypes.GridCellKind.Boolean,
         data: selectedRows === null || selectedRows === void 0 ? void 0 : selectedRows.includes(row),
@@ -187,7 +193,7 @@ var DataEditor = function DataEditor(p) {
         allowOverlay: false,
         allowEdit: false
       };
-    } else if (showTrailingBlankRow && row === mangledRows - 1) {
+    } else if (isTrailing) {
       //If the grid is empty, we will return text
       if (row === 0) {
         return {
@@ -200,7 +206,7 @@ var DataEditor = function DataEditor(p) {
 
 
       var previousRow = getCellContent([col - rowMarkerOffset, row - 1]);
-      return (0, _dataGridLib.makeEditCell)(previousRow);
+      return (0, _dataGridLib.makeEditCell)(previousRow, true);
     } else {
       return getCellContent([col - rowMarkerOffset, row]);
     }
@@ -255,6 +261,7 @@ var DataEditor = function DataEditor(p) {
                 height: bottom - top + 1
               }
             }));
+            focus();
           } else {
             setGridSelection({
               cell: [col, _row],
@@ -404,7 +411,7 @@ var DataEditor = function DataEditor(p) {
       location: [args.location[0] - rowMarkerOffset, args.location[1]]
     }));
   }, [onDragStart, rowMarkerOffset]);
-  var onItemHovered = React.useCallback(function (args) {
+  var onItemHoveredImpl = React.useCallback(function (args) {
     if (args.kind === "cell") {
       setHoveredCell(args.location);
     } else if (args.kind === "out-of-bounds") {
@@ -471,7 +478,9 @@ var DataEditor = function DataEditor(p) {
         }
       }
     }
-  }, [gridSelection, isDraggable, rowMarkers, setGridSelection, columns, rowHeight]);
+
+    onItemHovered === null || onItemHovered === void 0 ? void 0 : onItemHovered(args);
+  }, [onItemHovered, gridSelection, isDraggable, rowMarkers, setGridSelection, columns, rowHeight]);
   var copyToClipboard = React.useCallback(function (cells) {
     function escape(str) {
       if (/\n|"/.test(str)) {
@@ -581,8 +590,10 @@ var DataEditor = function DataEditor(p) {
     }));
   }, [gridSelection, rowMarkerOffset, rows, setGridSelection]);
   var updateSelectedCell = React.useCallback(function (col, row) {
+    var fromEditingTrailingRow = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+    var rowMax = mangledRows - (fromEditingTrailingRow ? 0 : 1);
     col = (0, _fp.clamp)(rowMarkerOffset, columns.length, col);
-    row = (0, _fp.clamp)(0, mangledRows - 1, row);
+    row = (0, _fp.clamp)(0, rowMax, row);
     if (col === (gridSelection === null || gridSelection === void 0 ? void 0 : gridSelection.cell[0]) && row === (gridSelection === null || gridSelection === void 0 ? void 0 : gridSelection.cell[1])) return false;
     setGridSelection({
       cell: [col, row],
@@ -659,7 +670,7 @@ var DataEditor = function DataEditor(p) {
     }
 
     return true;
-  }, [rowMarkerOffset, columns, mangledRows, gridSelection === null || gridSelection === void 0 ? void 0 : gridSelection.cell, setGridSelection, rowMarkers, rowMarkerWidth, cellXOffset, cellYOffset, headerHeight, rowHeight, mangledCols]);
+  }, [mangledRows, rowMarkerOffset, columns, gridSelection === null || gridSelection === void 0 ? void 0 : gridSelection.cell, setGridSelection, rowMarkers, rowMarkerWidth, cellXOffset, cellYOffset, headerHeight, rowHeight, mangledCols]);
   var onFinishEditing = React.useCallback(function (newValue, movement) {
     if (gridSelection !== undefined && newValue !== undefined) {
       // Fixme, this cast is dangerous
@@ -674,9 +685,10 @@ var DataEditor = function DataEditor(p) {
         movY = _movement[1];
 
     if (gridSelection !== undefined && (movX !== 0 || movY !== 0)) {
-      updateSelectedCell(gridSelection.cell[0] + movX, gridSelection.cell[1] + movY);
+      var isEditingTrailingRow = gridSelection.cell[1] === mangledRows - 1 && newValue !== undefined;
+      updateSelectedCell(gridSelection.cell[0] + movX, gridSelection.cell[1] + movY, isEditingTrailingRow);
     }
-  }, [gridSelection, focus, mangledOnCellEdited, rowMarkerOffset, updateSelectedCell]);
+  }, [gridSelection, focus, mangledOnCellEdited, rowMarkerOffset, mangledRows, updateSelectedCell]);
   var onCellFocused = React.useCallback(function (cell) {
     setGridSelection({
       cell: cell,
@@ -1018,8 +1030,11 @@ var DataEditor = function DataEditor(p) {
 
     var _gridSelection$cell8 = _slicedToArray(gridSelection.cell, 2),
         col = _gridSelection$cell8[0],
-        row = _gridSelection$cell8[1];
+        row = _gridSelection$cell8[1]; // Check that the grid selection is in range before updating the selected cell
 
+
+    var selectionColInRange = mangledCols[col];
+    if (selectionColInRange === undefined) return;
     updateSelectedCell(col, row);
   }, [mangledCols, rows, gridSelection, updateSelectedCell]);
   var theme = (0, _styledComponents.useTheme)();
@@ -1043,7 +1058,7 @@ var DataEditor = function DataEditor(p) {
     onDragStart: onDragStartImpl,
     onCellFocused: onCellFocused,
     onHeaderMenuClick: onHeaderMenuClickInner,
-    onItemHovered: onItemHovered,
+    onItemHovered: onItemHoveredImpl,
     onKeyDown: onKeyDown,
     onMouseDown: onMouseDown,
     onMouseUp: onMouseUp,

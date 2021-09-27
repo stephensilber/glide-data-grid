@@ -43,4 +43,3 @@ export declare const ImageOverlayEditorStyle: import("styled-components").Styled
         };
     };
 }, {}, never>;
-//# sourceMappingURL=image-overlay-editor-style.d.ts.map

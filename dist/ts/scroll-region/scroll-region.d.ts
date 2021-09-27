@@ -17,4 +17,3 @@ interface Props {
 }
 declare const ScrollRegion: React.FunctionComponent<Props>;
 export default ScrollRegion;
-//# sourceMappingURL=scroll-region.d.ts.map

@@ -45,4 +45,3 @@ export declare const SearchWrapper: import("styled-components").StyledComponent<
 }, {
     showSearch: boolean;
 }, never>;
-//# sourceMappingURL=data-grid-search-style.d.ts.map

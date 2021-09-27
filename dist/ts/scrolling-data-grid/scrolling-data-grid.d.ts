@@ -16,4 +16,3 @@ export interface ScrollingDataGridProps extends Subtract<DataGridDndProps, Handl
 }
 declare const GridScroller: React.FunctionComponent<ScrollingDataGridProps>;
 export default GridScroller;
-//# sourceMappingURL=scrolling-data-grid.d.ts.map

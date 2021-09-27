@@ -43,4 +43,3 @@ export declare const UriOverlayEditorStyle: import("styled-components").StyledCo
         };
     };
 }, {}, never>;
-//# sourceMappingURL=uri-overlay-editor-style.d.ts.map

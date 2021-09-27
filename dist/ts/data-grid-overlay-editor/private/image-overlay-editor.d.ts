@@ -10,4 +10,3 @@ export interface OverlayImageEditorProps {
 }
 declare const ImageOverlayEditor: React.FunctionComponent<OverlayImageEditorProps>;
 export default ImageOverlayEditor;
-//# sourceMappingURL=image-overlay-editor.d.ts.map

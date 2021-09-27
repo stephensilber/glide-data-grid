@@ -6,4 +6,3 @@ export * from "./data-grid/data-grid-types";
 export { default as DataEditorContainer } from "./data-editor-container/data-grid-container";
 export { Theme } from "./common/styles";
 export default DataEditor;
-//# sourceMappingURL=index.d.ts.map

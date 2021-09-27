@@ -1,11 +1,11 @@
 import { Theme } from "../common/styles";
 import ImageWindowLoader from "../common/image-window-loader";
 import { DrilldownCellData, GridCell, GridColumn } from "./data-grid-types";
-export interface MappedGridColumn extends GridColumn {
+interface MappedGridColumn extends GridColumn {
     sourceIndex: number;
     sticky: boolean;
 }
-export declare function makeEditCell(cell: GridCell): GridCell;
+export declare function makeEditCell(cell: GridCell, forceBooleanOff?: boolean): GridCell;
 export declare function getEffectiveColumns(columns: readonly GridColumn[], cellXOffset: number, width: number, firstColSticky: boolean, dndState?: {
     src: number;
     dest: number;
@@ -25,4 +25,3 @@ interface Point {
 }
 export declare function roundedPoly(ctx: CanvasRenderingContext2D, points: Point[], radiusAll: number): void;
 export {};
-//# sourceMappingURL=data-grid-lib.d.ts.map

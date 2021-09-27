@@ -9,4 +9,3 @@ export interface IconProps {
 export declare const disabledProps: import("styled-components").FlattenSimpleInterpolation;
 export declare const EditPencil: React.FunctionComponent<IconProps>;
 export declare function useDebouncedMemo<T>(factory: () => T, deps: React.DependencyList | undefined, time: number): T;
-//# sourceMappingURL=utils.d.ts.map

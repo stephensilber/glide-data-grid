@@ -7,18 +7,14 @@ exports.NumberOverlayEditorStyle = void 0;
 
 var _styles = require("../../common/styles");
 
-function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n    display: flex;\n"]);
-
-  _templateObject = function _templateObject() {
-    return data;
-  };
-
-  return data;
-}
+var _templateObject;
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var NumberOverlayEditorStyle = _styles.styled.div(_templateObject());
+var NumberOverlayEditorStyle = _styles.styled.div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    display: flex;\n    color: ", ";\n\n    > input {\n        color: ", ";\n    }\n"])), function (p) {
+  return p.theme.fgColorDark;
+}, function (p) {
+  return p.theme.fgColorDark;
+});
 
 exports.NumberOverlayEditorStyle = NumberOverlayEditorStyle;

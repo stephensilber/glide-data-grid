@@ -17,6 +17,22 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -24,6 +40,18 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var rowShift = 1 << 16;
+
+function packColRowToNumber(col, row) {
+  return row * rowShift + col;
+}
+
+function unpackNumberToColRow(packed) {
+  var col = packed % rowShift;
+  var row = (packed - col) / rowShift;
+  return [col, row];
+}
 
 var ImageWindowLoader = /*#__PURE__*/function () {
   function ImageWindowLoader() {
@@ -55,8 +83,14 @@ var ImageWindowLoader = /*#__PURE__*/function () {
     _defineProperty(this, "clearOutOfWindow", (0, _debounce.default)(function () {
       var old = _this.cache;
       _this.cache = {};
-      Object.values(old).filter(function (v) {
-        return _this.isInWindow(v.col, v.row);
+      Object.values(old).map(function (v) {
+        return _objectSpread(_objectSpread({}, v), {}, {
+          cells: new Set(Array.from(v.cells).filter(function (n) {
+            return _this.isInWindow.apply(_this, _toConsumableArray(unpackNumberToColRow(n)));
+          }))
+        });
+      }).filter(function (v) {
+        return v.cells.size > 0;
       }).forEach(function (v) {
         _this.cache["".concat(v.url)] = v;
       });
@@ -90,8 +124,7 @@ var ImageWindowLoader = /*#__PURE__*/function () {
       var current = this.cache[key];
 
       if (current !== undefined) {
-        current.col = col;
-        current.row = row;
+        current.cells.add(packColRowToNumber(col, row));
         return current.img;
       } else {
         var img = new Image(); // FIXME
@@ -108,14 +141,14 @@ var ImageWindowLoader = /*#__PURE__*/function () {
         img.src = url;
         var result = {
           img: undefined,
-          col: col,
-          row: row,
+          cells: new Set([packColRowToNumber(col, row)]),
           url: url
         };
 
         var load = /*#__PURE__*/function () {
           var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-            var errored;
+            var errored, toWrite, _i, _Array$from, packed;
+
             return regeneratorRuntime.wrap(function _callee$(_context) {
               while (1) {
                 switch (_context.prev = _context.next) {
@@ -135,15 +168,21 @@ var ImageWindowLoader = /*#__PURE__*/function () {
                     errored = true;
 
                   case 9:
-                    if (_this2.cache[key] !== undefined && !errored) {
-                      result.img = img;
+                    toWrite = _this2.cache[key];
 
-                      _this2.loadedLocations.push([col, row]);
+                    if (toWrite !== undefined && !errored) {
+                      toWrite.img = img;
+
+                      for (_i = 0, _Array$from = Array.from(toWrite.cells); _i < _Array$from.length; _i++) {
+                        packed = _Array$from[_i];
+
+                        _this2.loadedLocations.push(unpackNumberToColRow(packed));
+                      }
 
                       _this2.sendLoaded();
                     }
 
-                  case 10:
+                  case 11:
                   case "end":
                     return _context.stop();
                 }

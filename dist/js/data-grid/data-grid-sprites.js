@@ -6,13 +6,9 @@ Object.defineProperty(exports, "__esModule", {
 exports.buildSpriteMap = buildSpriteMap;
 exports.drawSprite = drawSprite;
 
-var _canvg = _interopRequireDefault(require("canvg"));
-
 var _sprites = require("./sprites");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
@@ -36,7 +32,7 @@ function _buildSpriteMap() {
   _buildSpriteMap = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(theme) {
     var _lastTheme, _lastTheme2, _lastTheme3, _lastTheme4;
 
-    var themeExtract, ctx, x, _iterator, _step, key, sprite, y, _iterator2, _step2, variant, fgColor, bgColor, renderTarget, renderCtx, v;
+    var themeExtract, ctx, x, _iterator, _step, key, sprite, y, _iterator2, _step2, variant, fgColor, bgColor, imgSource;
 
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
@@ -80,7 +76,7 @@ function _buildSpriteMap() {
 
           case 14:
             if ((_step = _iterator.n()).done) {
-              _context.next = 50;
+              _context.next = 45;
               break;
             }
 
@@ -94,7 +90,7 @@ function _buildSpriteMap() {
 
           case 21:
             if ((_step2 = _iterator2.n()).done) {
-              _context.next = 39;
+              _context.next = 34;
               break;
             }
 
@@ -110,85 +106,69 @@ function _buildSpriteMap() {
               fgColor = themeExtract.columnHeaderBg;
             }
 
-            renderTarget = document.createElement("canvas");
-            renderTarget.width = renderSize;
-            renderTarget.height = renderSize;
-            renderCtx = renderTarget.getContext("2d");
-
-            if (!(renderCtx === null)) {
-              _context.next = 32;
-              break;
-            }
-
-            return _context.abrupt("continue", 37);
-
-          case 32:
-            v = _canvg.default.fromString(renderCtx, sprite({
+            imgSource = new Image();
+            imgSource.src = "data:image/svg+xml;charset=utf-8,".concat(encodeURIComponent(sprite({
               fgColor: fgColor,
               bgColor: bgColor
-            }), {
-              scaleHeight: 40,
-              scaleWidth: 40,
-              ignoreDimensions: true
-            });
-            _context.next = 35;
-            return v.render();
+            })));
+            _context.next = 30;
+            return imgSource.decode();
 
-          case 35:
-            ctx.drawImage(renderTarget, x, y);
+          case 30:
+            ctx.drawImage(imgSource, x, y, renderSize, renderSize);
             y += renderSize;
 
-          case 37:
+          case 32:
             _context.next = 21;
             break;
 
-          case 39:
-            _context.next = 44;
+          case 34:
+            _context.next = 39;
             break;
 
-          case 41:
-            _context.prev = 41;
+          case 36:
+            _context.prev = 36;
             _context.t0 = _context["catch"](19);
 
             _iterator2.e(_context.t0);
 
-          case 44:
-            _context.prev = 44;
+          case 39:
+            _context.prev = 39;
 
             _iterator2.f();
 
-            return _context.finish(44);
+            return _context.finish(39);
 
-          case 47:
+          case 42:
             x += renderSize;
 
-          case 48:
+          case 43:
             _context.next = 14;
             break;
 
-          case 50:
-            _context.next = 55;
+          case 45:
+            _context.next = 50;
             break;
 
-          case 52:
-            _context.prev = 52;
+          case 47:
+            _context.prev = 47;
             _context.t1 = _context["catch"](12);
 
             _iterator.e(_context.t1);
 
-          case 55:
-            _context.prev = 55;
+          case 50:
+            _context.prev = 50;
 
             _iterator.f();
 
-            return _context.finish(55);
+            return _context.finish(50);
 
-          case 58:
+          case 53:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[12, 52, 55, 58], [19, 41, 44, 47]]);
+    }, _callee, null, [[12, 47, 50, 53], [19, 36, 39, 42]]);
   }));
   return _buildSpriteMap.apply(this, arguments);
 }

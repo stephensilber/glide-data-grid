@@ -43,4 +43,3 @@ export declare const ScrollRegionStyle: import("styled-components").StyledCompon
         };
     };
 }, {}, never>;
-//# sourceMappingURL=scroll-region-style.d.ts.map

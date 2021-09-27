@@ -92,4 +92,3 @@ export declare const styled: ThemedStyledInterface<{
 }>;
 export declare function getBuilderTheme(): Theme;
 export {};
-//# sourceMappingURL=styles.d.ts.map

@@ -12,4 +12,3 @@ interface Props {
 }
 declare const DataGridOverlayEditor: React.FunctionComponent<Props>;
 export default DataGridOverlayEditor;
-//# sourceMappingURL=data-grid-overlay-editor.d.ts.map

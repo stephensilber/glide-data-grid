@@ -43,4 +43,3 @@ export declare const NumberOverlayEditorStyle: import("styled-components").Style
         };
     };
 }, {}, never>;
-//# sourceMappingURL=number-overlay-editor-style.d.ts.map

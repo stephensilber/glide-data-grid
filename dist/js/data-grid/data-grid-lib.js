@@ -25,7 +25,7 @@ var _support = require("../common/support");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
@@ -33,25 +33,27 @@ function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread n
 
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function makeEditCell(cell) {
+  var forceBooleanOff = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
   var isEditable = (0, _dataGridTypes.isEditableGridCell)(cell);
 
   switch (cell.kind) {
     case _dataGridTypes.GridCellKind.Boolean:
       return _objectSpread(_objectSpread({}, cell), {}, {
-        data: false
+        data: false,
+        showUnchecked: forceBooleanOff ? false : cell.showUnchecked
       });
 
     case _dataGridTypes.GridCellKind.Text:
@@ -339,7 +341,6 @@ function drawDrilldownCell(ctx, theme, data, col, row, x, y, width, height, imag
   var bubblePad = 8;
   var bubbleMargin = itemMargin;
   var renderX = x + cellXPad;
-  var centerY = y + height / 2;
   var renderBoxes = [];
 
   var _iterator3 = _createForOfIteratorHelper(data),
@@ -351,7 +352,7 @@ function drawDrilldownCell(ctx, theme, data, col, row, x, y, width, height, imag
       if (renderX > x + width) break;
       var textWidth = measureTextWidth(el.text, ctx);
       var imgWidth = el.img === undefined ? 0 : bubbleHeight - 8 + 4;
-      var renderWidth = 8 + textWidth + imgWidth + bubblePad * 2;
+      var renderWidth = textWidth + imgWidth + bubblePad * 2;
       renderBoxes.push({
         x: renderX,
         width: renderWidth
@@ -368,13 +369,13 @@ function drawDrilldownCell(ctx, theme, data, col, row, x, y, width, height, imag
   renderBoxes.forEach(function (rectInfo) {
     roundedRect(ctx, rectInfo.x, y + (height - bubbleHeight) / 2, rectInfo.width, bubbleHeight, 6);
   });
-  ctx.shadowColor = "rgba(62, 65, 86, 0.4)";
+  ctx.shadowColor = "rgba(24, 25, 34, 0.4)";
   ctx.shadowBlur = 1;
   ctx.fillStyle = theme.dataViewer.gridColor;
   ctx.fill();
-  ctx.shadowColor = "rgba(62, 65, 86, 0.15)";
+  ctx.shadowColor = "rgba(24, 25, 34, 0.2)";
   ctx.shadowOffsetY = 1;
-  ctx.shadowBlur = 3;
+  ctx.shadowBlur = 5;
   ctx.fillStyle = theme.dataViewer.gridColor;
   ctx.fill();
   ctx.shadowOffsetY = 0;
@@ -383,20 +384,6 @@ function drawDrilldownCell(ctx, theme, data, col, row, x, y, width, height, imag
   renderBoxes.forEach(function (rectInfo, i) {
     var d = data[i];
     var drawX = rectInfo.x + bubblePad;
-    ctx.beginPath();
-    roundedPoly(ctx, [{
-      x: drawX + -3,
-      y: centerY - 5
-    }, {
-      x: drawX + -3,
-      y: centerY + 5
-    }, {
-      x: drawX + 2,
-      y: centerY
-    }], 1);
-    ctx.fillStyle = theme.fgColorMedium;
-    ctx.fill();
-    drawX += 8;
 
     if (d.img !== undefined) {
       var img = imageLoader.loadOrGetImage(d.img, col, row);

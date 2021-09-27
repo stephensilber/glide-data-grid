@@ -1,3 +1,7 @@
+import { Rectangle } from "data-grid/data-grid-types";
+interface Props {
+    targetRect: Rectangle;
+}
 export declare const MarkdownOverlayEditorStyle: import("styled-components").StyledComponent<"div", {
     overlayName: string;
     darkGrey: string;
@@ -42,5 +46,5 @@ export declare const MarkdownOverlayEditorStyle: import("styled-components").Sty
             };
         };
     };
-}, {}, never>;
-//# sourceMappingURL=markdown-overlay-editor-style.d.ts.map
+}, Props, never>;
+export {};

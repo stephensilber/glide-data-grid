@@ -11,7 +11,6 @@ interface Handled {
     readonly className?: string;
     readonly selectedColumns?: readonly number[];
     readonly selectedCell?: GridSelection;
-    readonly onItemHovered?: (args: GridMouseEventArgs) => void;
     readonly onMouseDown?: (args: GridMouseEventArgs) => void;
     readonly onMouseUp?: (args: GridMouseEventArgs) => void;
     readonly onKeyDown?: (event: GridKeyEventArgs) => void;
@@ -55,4 +54,3 @@ export interface DataEditorProps extends Subtract<DataGridSearchProps, Handled> 
 }
 declare const DataEditor: React.FunctionComponent<DataEditorProps>;
 export default DataEditor;
-//# sourceMappingURL=data-editor.d.ts.map

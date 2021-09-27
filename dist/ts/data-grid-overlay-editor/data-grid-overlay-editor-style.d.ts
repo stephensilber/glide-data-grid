@@ -48,4 +48,3 @@ export declare const DataGridOverlayEditorStyle: import("styled-components").Sty
     };
 }, Props, never>;
 export {};
-//# sourceMappingURL=data-grid-overlay-editor-style.d.ts.map

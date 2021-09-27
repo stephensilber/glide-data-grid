@@ -6,4 +6,3 @@ export declare type SpriteVariant = "normal" | "selected" | "special" | "special
 export declare function buildSpriteMap(theme: Theme): Promise<void>;
 export declare function drawSprite(sprite: Sprite, variant: SpriteVariant, ctx: CanvasRenderingContext2D, x: number, y: number, size: number): void;
 export {};
-//# sourceMappingURL=data-grid-sprites.d.ts.map

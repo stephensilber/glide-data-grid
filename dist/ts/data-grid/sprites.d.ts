@@ -2,6 +2,7 @@ import { IconProps } from "../common/utils";
 export declare const sprites: {
     headerRowID: (props: IconProps) => string;
     headerNumber: (props: IconProps) => string;
+    headerCode: (props: IconProps) => string;
     headerString: (props: IconProps) => string;
     headerBoolean: (props: IconProps) => string;
     headerAudioUri: (props: IconProps) => string;
@@ -28,4 +29,3 @@ export declare const sprites: {
     rowOwnerOverlay: (props: IconProps) => string;
     protectedColumnOverlay: (props: IconProps) => string;
 };
-//# sourceMappingURL=sprites.d.ts.map
